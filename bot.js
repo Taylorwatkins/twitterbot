@@ -1,15 +1,48 @@
+//var fs = require('fs')
 // Our Twitter library
 var Twit = require('twit');
 
 // We need to include our configuration file
 var T = new Twit(require('./config.js'));
 
+//twitter by default
+var stream = T.stream('statuses/filter', { track: ['@StealTheT'] });
+stream.on('tweet', tweetEvent);
+
+function tweetEvent(tweet) {
+
+    // Who sent the tweet?
+    var name = tweet.user.screen_name;
+    // What is the text?
+    // var txt = tweet.text;
+    // the status update or tweet ID in which we will reply
+    var nameID  = tweet.id_str;
+
+     // Get rid of the @ mention
+    // var txt = txt.replace(/@myTwitterHandle/g, "");
+
+    // Start a reply back to the sender
+    var reply = "You mentioned me! @" + name + ' ' + 'You are super cool!';
+    var params             = {
+                              status: reply,
+                              in_reply_to_status_id: nameID
+                             };
+
+    T.post('statuses/update', params, function(err, data, response) {
+      if (err !== undefined) {
+        console.log(err);
+      } else {
+        console.log('Tweeted: ' + params.status);
+      }
+    })
+};
+
 // This is the URL of a search for the latest tweets on the '#mediaarts' hashtag.
-var mediaArtsSearch = {q: "#GeorgiaTech", count: 10, result_type: "recent"}; 
+var gtSearch = {q: "#GeorgiaTech", count: 10, result_type: "recent"}; 
 
 // This function finds the latest tweet with the #mediaarts hashtag, and retweets it.
-function retweetLatest() {
-	T.get('search/tweets', mediaArtsSearch, function (error, data) {
+function retweetWithoutT() {
+	T.get('search/tweets', gtSearch, function (error, data) {
 	  // log out any errors and responses
 	  console.log(error, data);
 	  // If our search request to the server had no errors...
@@ -37,7 +70,7 @@ function retweetLatest() {
 }
 
 // Try to retweet something as soon as we run the program...
-retweetLatest();
+retweetWithoutT();
 // ...and then every hour after that. Time here is in milliseconds, so
 // 1000 ms = 1 second, 1 sec * 60 = 1 min, 1 min * 60 = 1 hour --> 1000 * 60 * 60
-setInterval(retweetLatest, 1000 * 60 * 5);
+setInterval(retweetWithoutT, 1000 * 60 * 5);

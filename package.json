@@ -1,0 +1,29 @@
+{
+  "name": "twitterbot",
+  "version": "1.0.0",
+  "description": "a twitterbot for class",
+  "main": "bot.js",
+  "dependencies": {
+    "q": "^1.5.1",
+    "request": "^2.88.0",
+    "twit": "^2.2.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taylorwatkins/twitterbot.git"
+  },
+  "keywords": [
+    "twiter",
+    "bot"
+  ],
+  "author": "Taylor and Clark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Taylorwatkins/twitterbot/issues"
+  },
+  "homepage": "https://github.com/Taylorwatkins/twitterbot#readme"
+}
