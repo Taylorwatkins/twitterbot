@@ -72,7 +72,7 @@ function retweetWithoutT() {
 	});
 }
 
-var ugaSearch = {q: "#UGA", count: 10, result_type: "recent"}; 
+var ugaSearch = {q: "#UGA", count: 2, result_type: "recent"}; 
 
 // This function finds the latest tweet with the #mediaarts hashtag, and retweets it.
 function retweetWithLittleG() {
