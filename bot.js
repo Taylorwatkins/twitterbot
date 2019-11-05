@@ -14,7 +14,10 @@ function tweetEvent(tweet) {
     // Who sent the tweet?
     var name = tweet.user.screen_name;
     // What is the text?
-    // var txt = tweet.text;
+    var txt = tweet.text;
+    txt = txt.replace("@StealTheT", "");
+    txt = txt.replace(/T/g, '');
+    txt = txt.replace(/t/g, '');
     // the status update or tweet ID in which we will reply
     var nameID  = tweet.id_str;
 
@@ -22,7 +25,7 @@ function tweetEvent(tweet) {
     // var txt = txt.replace(/@myTwitterHandle/g, "");
 
     // Start a reply back to the sender
-    var reply = "You mentioned me! @" + name + ' ' + 'You are super cool!';
+    var reply = "@" + name + ' ' + txt;
     var params             = {
                               status: reply,
                               in_reply_to_status_id: nameID
