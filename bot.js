@@ -41,7 +41,7 @@ function tweetEvent(tweet) {
     })
 };
 
-// This is the URL of a search for the latest tweets on the '#mediaarts' hashtag.
+// This is the URL of a search for the latest tweets on the '#GeorgiaTech' hashtag.
 var gtSearch = {q: "#GeorgiaTech", count: 5, result_type: "recent"};
 
 // This function finds the latest tweet with the #GeorgiaTech hashtag, and retweets it without the T or t.
@@ -85,6 +85,7 @@ function retweetWithoutT() {
 
 }
 
+// This is the URL of a search for the latest tweets on the '#UGA' hashtag.
 var ugaSearch = {q: "#UGA", count: 5, result_type: "recent"};
 
 // This function finds the latest tweet with the #UGA hashtag, and retweets it with a little g.
