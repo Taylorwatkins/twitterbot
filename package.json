@@ -4,6 +4,7 @@
   "description": "a twitterbot for class",
   "main": "bot.js",
   "dependencies": {
+    "fs": "0.0.1-security",
     "q": "^1.5.1",
     "request": "^2.88.0",
     "twit": "^2.2.11"

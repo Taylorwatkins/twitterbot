@@ -4,6 +4,7 @@ var Twit = require('twit');
 
 // We need to include our configuration file
 var T = new Twit(require('./config.js'));
+var fs = require('fs');
 
 //twitter by default
 var stream = T.stream('statuses/filter', { track: ['@StealTheT'] });
@@ -41,7 +42,7 @@ function tweetEvent(tweet) {
 };
 
 // This is the URL of a search for the latest tweets on the '#mediaarts' hashtag.
-var gtSearch = {q: "#GeorgiaTech", count: 10, result_type: "recent"}; 
+var gtSearch = {q: "#GeorgiaTech", count: 5, result_type: "recent"}; 
 
 // This function finds the latest tweet with the #mediaarts hashtag, and retweets it.
 function retweetWithoutT() {
@@ -54,15 +55,26 @@ function retweetWithoutT() {
 		var retweetId = data.statuses[0].text;
         retweetId = retweetId.replace(/T/g, '');
         retweetId = retweetId.replace(/t/g, '');
-		// ...and then we tell Twitter we want to retweet it!
-		T.post('statuses/update', {status: retweetId }, function (error, response) {
-			if (response) {
-				console.log('Success! Check your bot, it should have retweeted something.')
-			}
-			// If there was an error with our Twitter call, we print it out here.
-			if (error) {
-				console.log('There was an error with Twitter:', error);
-			}
+        var b64content = fs.readFileSync('./images/noT.jpeg', { encoding: 'base64' })
+
+// first we must post the media to Twitter
+		T.post('media/upload', { media_data: b64content }, function (err, data, response) {
+		  // now we can assign alt text to the media, for use by screen readers and
+		  // other text-based presentations and interpreters
+		  var mediaIdStr = data.media_id_string
+		  var altText = "Tech Tower"
+		  var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+		
+		  T.post('media/metadata/create', meta_params, function (err, data, response) {
+		    if (!err) {
+		      // now we can reference the media and post a tweet (media will attach to the tweet)
+		      var params = { status: retweetId, media_ids: [mediaIdStr] }
+		
+		      T.post('statuses/update', params, function (err, data, response) {
+		        console.log(data)
+		      })
+		    }
+		  })
 		})
 	  }
 	  // However, if our original search request had an error, we want to print it out here.
@@ -70,9 +82,10 @@ function retweetWithoutT() {
 	  	console.log('There was an error with your hashtag search:', error);
 	  }
 	});
+
 }
 
-var ugaSearch = {q: "#UGA", count: 2, result_type: "recent"}; 
+var ugaSearch = {q: "#UGA", count: 5, result_type: "recent"}; 
 
 // This function finds the latest tweet with the #mediaarts hashtag, and retweets it.
 function retweetWithLittleG() {
@@ -85,17 +98,38 @@ function retweetWithLittleG() {
 		var retweetId = data.statuses[0].text;
         retweetId = retweetId.replace(/G/g, 'g');
         var thwg = "THWg"
+        var b64content = fs.readFileSync('./images/buzz.jpeg', { encoding: 'base64' })
+
+// first we must post the media to Twitter
+		T.post('media/upload', { media_data: b64content }, function (err, data, response) {
+		  // now we can assign alt text to the media, for use by screen readers and
+		  // other text-based presentations and interpreters
+		  var mediaIdStr = data.media_id_string
+		  var altText = "buzz"
+		  var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+		
+		  T.post('media/metadata/create', meta_params, function (err, data, response) {
+		    if (!err) {
+		      // now we can reference the media and post a tweet (media will attach to the tweet)
+		      var params = { status: retweetId + "\nTHWg", media_ids: [mediaIdStr] }
+		
+		      T.post('statuses/update', params, function (err, data, response) {
+		        console.log(data)
+		      })
+		    }
+		  })
+		})
         //retweetId = retweetId.replace(/t/g, '');
 		// ...and then we tell Twitter we want to retweet it!
-		T.post('statuses/update', {status: retweetId + "\nTHWg" }, function (error, response) {
-			if (response) {
-				console.log('Success! Check your bot, it should have retweeted something.')
-			}
-			// If there was an error with our Twitter call, we print it out here.
-			if (error) {
-				console.log('There was an error with Twitter:', error);
-			}
-		})
+		// T.post('statuses/update', {status: retweetId + "\nTHWg" }, function (error, response) {
+		// 	if (response) {
+		// 		console.log('Success! Check your bot, it should have retweeted something.')
+		// 	}
+		// 	// If there was an error with our Twitter call, we print it out here.
+		// 	if (error) {
+		// 		console.log('There was an error with Twitter:', error);
+		// 	}
+		// })
 	  }
 	  // However, if our original search request had an error, we want to print it out here.
 	  else {
