@@ -43,7 +43,7 @@ function tweetEvent(tweet) {
 // This is the URL of a search for the latest tweets on the '#mediaarts' hashtag.
 var gtSearch = {q: "#GeorgiaTech", count: 10, result_type: "recent"}; 
 
-// This function finds the latest tweet with the #mediaarts hashtag, and retweets it.
+// This function finds the latest tweet with the #GeorgiaTech hashtag, and retweets it without the T or t.
 function retweetWithoutT() {
 	T.get('search/tweets', gtSearch, function (error, data) {
 	  // log out any errors and responses
@@ -74,7 +74,7 @@ function retweetWithoutT() {
 
 var ugaSearch = {q: "#UGA", count: 2, result_type: "recent"}; 
 
-// This function finds the latest tweet with the #mediaarts hashtag, and retweets it.
+// This function finds the latest tweet with the #UGA hashtag, and retweets it with a little g.
 function retweetWithLittleG() {
 	T.get('search/tweets', ugaSearch, function (error, data) {
 	  // log out any errors and responses
@@ -107,6 +107,7 @@ function retweetWithLittleG() {
 // Try to retweet something as soon as we run the program...
 retweetWithoutT();
 retweetWithLittleG();
-// ...and then every hour after that. Time here is in milliseconds, so
-// 1000 ms = 1 second, 1 sec * 60 = 1 min, 1 min * 60 = 1 hour --> 1000 * 60 * 60
-setInterval(retweetWithoutT, 1000 * 60 * 5);
+// ...and then every 10 minutes after that. Time here is in milliseconds, so
+// 1000 ms = 1 second, 1 sec * 60 = 1 min, 1 min * 10 = 10 minutes --> 1000 * 60 * 10
+setInterval(retweetWithoutT, 1000 * 60 * 10);
+setInterval(retweetWithLittleG, 1000 * 60 * 10);
