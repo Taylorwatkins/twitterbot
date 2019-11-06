@@ -99,7 +99,7 @@ function retweetWithLittleG() {
 		var retweetId = data.statuses[0].text;
         retweetId = retweetId.replace(/G/g, 'g');
         var thwg = "THWg"
-        var b64content = fs.readFileSync('./images/buzz.jpeg', { encoding: 'base64' })
+        var b64content = fs.readFileSync('./images/2011-september-10-18-4-10.0.jpg', { encoding: 'base64' })
 
 // first we must post the media to Twitter
 		T.post('media/upload', { media_data: b64content }, function (err, data, response) {
